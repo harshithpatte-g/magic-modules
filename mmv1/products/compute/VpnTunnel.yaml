@@ -56,6 +56,19 @@ examples:
       udp4500_forwarding_rule_name: 'fr-udp4500'
       route_name:
         'route1'
+  - !ruby/object:Provider::Terraform::Examples
+    name: 'vpn_tunnel_with_capacity_tier'
+    primary_resource_id: 'tunnel1'
+    vars:
+      vpn_tunnel_name: 'tunnel-2'
+      target_vpn_gateway_name: 'vpn-2'
+      network_name: 'network-2'
+      address_name: 'vpn-static-ip-2'
+      esp_forwarding_rule_name: 'fr-esp-2'
+      udp500_forwarding_rule_name: 'fr-udp500-2'
+      udp4500_forwarding_rule_name: 'fr-udp4500-2'
+      route_name:
+        'route2'
 custom_code: !ruby/object:Provider::Terraform::CustomCode
   constants: templates/terraform/constants/vpn_tunnel.erb
   encoder: templates/terraform/encoders/vpn_tunnel.go.erb
@@ -99,6 +112,11 @@ properties:
     name: 'description'
     description: |
       An optional description of this resource.
+    immutable: true
+  - !ruby/object:Api::Type::String
+    name: 'capacityTier'
+    description: |
+      Capacity tier of this VPN tunnel. It is an optional field and the valid values are `CAPACITY_TIER_10_GBPS`, `CAPACITY_TIER_20_GBPS`, `CAPACITY_TIER_50_GBPS` and `CAPACITY_TIER_UNSPECIFIED`.
     immutable: true
   - !ruby/object:Api::Type::ResourceRef
     name: 'targetVpnGateway'
